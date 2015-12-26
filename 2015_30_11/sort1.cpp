@@ -1,6 +1,9 @@
-/*
-reversing a linked list using recursion
-*/
+
+//Given a linked list which is in pattern like combination of ascending and descending.Sort it.
+//(First all ascending numbers occur, next all descending nums)
+//Note : min of descending part is greater than max of ascending
+//Ex : Input 1->2->7->20->15->10
+//Output 1->2->7->10->15->20
 
 #include<stdio.h>
 #include<conio.h>
@@ -41,17 +44,31 @@ struct node * reverse(struct node * head)
 	return temp;
 }
 
+struct node * sort(struct node *head){
+	struct node *temp;
+	temp = head;
+	while (temp && temp->next){
+		if (temp->next->num > (temp->next->next)->num){
+			temp->next = reverse(temp->next);
+			break;
+		}
+		else temp = temp->next;
+	}
+	return head;
+}
+
 int main(){
 	struct node *start, *Node;
-	int a[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+	int a[] = { 1, 2, 3, 4, 10, 9, 8, 7, 6, 5 };
 	start = create(a[0]);
 	Node = start;
 	for (int i = 1; i < 10; i++){
 		Node->next = create(a[i]);
 		Node = Node->next;
 	}
-	print(start); 
-	print(reverse(start));
+	print(start);
+	start = sort(start);
+	print(start);
 	getch();
 	return 0;
 }

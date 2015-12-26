@@ -1,6 +1,6 @@
-/*
-reversing a linked list using recursion
-*/
+
+//Sorted a linked list which is in ascending order but two numbers are changed, i mean not in the usual order they need to be
+//Ex : 1->2->3->15->10->4->20; O / p:1 - 2 - 3 - 4 - 10 - 15 - 20
 
 #include<stdio.h>
 #include<conio.h>
@@ -41,17 +41,42 @@ struct node * reverse(struct node * head)
 	return temp;
 }
 
+struct node * sort_unusual(struct node *head){
+	struct node *temp,*a,*b;
+	temp = head;
+	while (temp && temp->next){
+		if (temp->num > temp->next->num){
+			a = temp;
+			temp = temp->next;
+			while (temp->next){
+				if (temp->num > temp->next->num){
+					b = temp->next;
+					a->num = a->num + b->num;
+					b->num = a->num - b->num;
+					a->num = a->num - b->num;
+					break;
+				}
+				else temp = temp->next;
+			}
+			break;
+		}
+		else temp = temp->next;
+	}
+	return head;
+}
+
 int main(){
 	struct node *start, *Node;
-	int a[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+	int a[] = { 1, 2, 3, 4, 10, 6, 7, 8, 9, 5 };
 	start = create(a[0]);
 	Node = start;
 	for (int i = 1; i < 10; i++){
 		Node->next = create(a[i]);
 		Node = Node->next;
 	}
-	print(start); 
-	print(reverse(start));
+	print(start);
+	start = sort_unusual(start);
+	print(start);
 	getch();
 	return 0;
 }
