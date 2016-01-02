@@ -7,7 +7,7 @@ struct node {
 };
 
 void print(struct node *head){
-	struct node *temp=head; 
+	struct node *temp = head;
 	while (temp != NULL)
 	{
 		printf("%d ->", temp->num);
@@ -24,8 +24,8 @@ struct node * create(int x) {
 	temp->next = NULL;
 	return temp;
 }
-struct node * merge_list(struct node *head1, struct node *head2) {
-	struct node *head, *temp;
+struct node * merge_list(struct node *h1, struct node *h2) {
+	struct node *head, *temp, *head1 = h1, *head2 = h2;
 	if (head1 && head2){
 		if (head1->num < head2->num){
 			head = head1;
@@ -37,16 +37,20 @@ struct node * merge_list(struct node *head1, struct node *head2) {
 		}
 		temp = head;
 		while (head1 != NULL && head2 != NULL){
-			if (head1->num < head2->num){
-				temp->next = head1;
-				temp = head1;
-				head1 = head1->next;
+			while (head1->num < head2->num){
+				if (head1 && head2){
+					temp->next = head1;
+					temp = head1;
+					head1 = head1->next;
+				}
 			}
-			else{
+
+			while (head1 && head2 && head1->num >= head2->num){
 				temp->next = head2;
 				temp = head2;
 				head2 = head2->next;
 			}
+
 		}
 		while (head1){
 			temp->next = head1;

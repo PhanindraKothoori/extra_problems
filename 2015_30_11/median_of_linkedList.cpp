@@ -8,15 +8,22 @@ struct node{
 	int num;
 	struct node* next;
 };
-
-struct node* findMedian(struct node* head){
+/*
+p1 moves two nodes in an iteration and p2 moves just 1.
+so there is an interval between the head of the linked list, p1, and p2.
+to be precise, p2 lies in between p1 and head
+*/
+float findMedian(struct node* head){
 	struct node *p1, *p2;
 	p1 = p2 = head;
 	while (head && p1->next && (p1->next)->next){
 		p1 = (p1->next)->next;
 		p2 = p2->next;
 	}
-	return p2;
+	if (p1->next == NULL)
+		return p2->num;
+	else
+		return (float)(p2->num + p2->next->num) / 2;
 }
 void print(struct node *head){
 	struct node *temp = head;
@@ -39,7 +46,7 @@ struct node * create(int x) {
 int main(){
 	int a[] = { 1, 2, 3, 4, 5 };
 	int b[] = { 1, 2, 3, 4 };
-
+	struct node *start, *Node;
 	//CREATING LINKED LIST 1
 	int i = 0;
 	start = create(a[i]);
@@ -51,7 +58,7 @@ int main(){
 	}
 	struct node *head1 = start;
 	print(head1);
-	printf("%d\n", findMedian(head1)->num);
+	printf("%f\n", findMedian(head1));
 
 	//CREATING LINKED LIST 2
 	i = 0;
@@ -62,10 +69,20 @@ int main(){
 		Node->next = create(b[i]);
 		Node = Node->next;
 	}
+	//end case 1: length of the linked list = 1
 	struct node *head2 = start;
 	print(head2);
-	printf("%d\n", findMedian(head2)->num);
+	printf("%f\n", findMedian(head2));
 
+	//end case 2: length of the linked list = 2
+	i = 0;
+	start = create(b[i]);
+	Node = start;
+	print(start);
+	printf("%f\n", findMedian(start));
+	Node->next = create(2);
+	print(start);
+	printf("%f\n", findMedian(start));
 
 	getch();
 	return 0;
