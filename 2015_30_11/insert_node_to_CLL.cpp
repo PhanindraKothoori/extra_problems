@@ -9,7 +9,11 @@ struct node {
 
 void insert_node(struct node *head, int num, int pos){
 	if (head){
-		if (pos == 0){//insert at head
+		if (pos == 0){
+			//insert at head
+
+			//first traverse to the end of the linked list 
+			//so that we can attach the last node to the new head
 			struct node *temp = head;
 			do{
 				temp = temp->next;
@@ -18,9 +22,9 @@ void insert_node(struct node *head, int num, int pos){
 
 			struct node *newNode = (struct node*)malloc(sizeof(struct node));
 			newNode->num = num;
-			newNode->next = head->next;
-			head->next = newNode;
-			temp->next = newNode;
+			newNode->next = head->next; // link new node's next to initial node
+			head->next = newNode;// link head's next to the newNode
+			temp->next = newNode;// last node's next as the newNode
 		}
 
 		else{
@@ -38,7 +42,8 @@ void insert_node(struct node *head, int num, int pos){
 	}
 }
 
-void insert_node(struct node* head, int num){//default insert at the end
+void insert_node(struct node* head, int num){
+	//default insert at the end
 	if (head){
 		struct node *temp = head;
 		do{
@@ -85,15 +90,16 @@ int main(){
 		Node = Node->next;
 	}
 	Node->next = start;
-	//initial case
+	//initial CLL
 	myprint(head);
 	//test cases
+	//normal insert at some position
 	insert_node(head, 10, 3);
 	myprint(head);
-
+	//insert into head
 	insert_node(head, 100, 0);
 	myprint(head);
-
+	//default insert at the end of the CLL
 	insert_node(head, 1000);
 	myprint(head);
 	getch();

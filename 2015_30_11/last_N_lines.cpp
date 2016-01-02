@@ -5,7 +5,8 @@ void last_N_lines(FILE *fp, int N){
 	fseek(fp, 0, SEEK_END);
 	char s[50];
 	int p = ftell(fp);
-	printf("%s", fgets(s, sizeof(s), fp));fseek(fp, -2, SEEK_SET);
+	printf("%s", fgets(s, sizeof(s), fp));
+	fseek(fp, -2, SEEK_SET);
 	printf("%s", fgets(s, sizeof(s), --fp));
 	while (N--){
 		

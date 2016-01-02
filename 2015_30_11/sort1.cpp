@@ -5,6 +5,10 @@
 //Ex : Input 1->2->7->20->15->10
 //Output 1->2->7->10->15->20
 
+
+/*
+we can use reverse for this solution. since the reverse of descending would result in ascending, we can use that.
+*/
 #include<stdio.h>
 #include<conio.h>
 #include<malloc.h>

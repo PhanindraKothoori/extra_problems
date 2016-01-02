@@ -52,7 +52,8 @@ struct node * sort_unusual(struct node *head){
 				if (temp->num > temp->next->num){
 					prev2 = temp;
 					b = temp->next;
-					if (prev1 == NULL){// if head is one of the misplaced nodes
+					if (prev1 == NULL){
+						// if head is one of the misplaced nodes
 						head = b;
 					}
 					else

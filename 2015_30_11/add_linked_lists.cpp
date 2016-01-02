@@ -1,5 +1,5 @@
 /*
-reversing a linked list using recursion
+adding two linked lists
 
 this can be done using stacks. 
 because addition is done from right to left, and stack uses top-down approach, both are analogous
@@ -56,16 +56,17 @@ int pop(struct stack *s){
 struct node* makeList(struct stack *s1, struct stack *s2){
 	struct node *head = NULL;
 	int sum = 0, carry = 0;
+	//add the nodes until we have done additions for all the nodes
 	while (s1->top >= 0 && s2->top >= 0){
  		struct node *temp = (node*)malloc(sizeof(struct node));
 		int a = pop(s1), b = pop(s2);
 		sum = (a + b + carry);
-		
 		temp->num = (sum) % 10;
 		temp->next = head;
 		head = temp;
 		carry = (sum) / 10;
 	}
+	//if the length of s1 is greater
 	while (s1->top>=0){
 		struct node *temp = (node*)malloc(sizeof(struct node));
 		int a = pop(s1);
@@ -76,6 +77,7 @@ struct node* makeList(struct stack *s1, struct stack *s2){
 		head = temp;
 		carry = sum / 10;
 	}
+	//if the length of s2 is greater
 	while (s2->top >= 0){
 		struct node *temp = (node*)malloc(sizeof(struct node));
 		int a = pop(s2);
@@ -86,6 +88,7 @@ struct node* makeList(struct stack *s1, struct stack *s2){
 		head = temp;
 		carry = sum / 10;
 	}
+	//this is for carry for the last element
 	if (carry){
 		struct node *temp = (node*)malloc(sizeof(struct node));
 		temp->num = 1;
@@ -97,11 +100,12 @@ struct node* makeList(struct stack *s1, struct stack *s2){
 
 
 struct node * add_linked_lists(struct node *head1, struct node * head2){
+	//create two stacks corresponding to two linked lists
 	struct stack s1, s2;
 
 	s1.top = -1;
 	s2.top = -1;
-
+	//push nodes' num fields into the stacks
 	while (head1){
 		push(&s1, head1->num);
 		head1 = head1->next;
@@ -110,7 +114,7 @@ struct node * add_linked_lists(struct node *head1, struct node * head2){
 		push(&s2, head2->num);
 		head2 = head2->next;
 	}
-	
+	//then call the actual addition function.
 	struct node *start = makeList(&s1, &s2);
 	return start;
 }
